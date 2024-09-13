@@ -1,3 +1,10 @@
+# project
+client_secret.json
+client_secrets.json
+video_ids.txt
+*token.json
+*.mp4
+
 # latest logs
 latest_logs/
 
