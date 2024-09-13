@@ -106,7 +106,7 @@ class YoutubeUploader:
             },
         }
 
-        media = MediaFileUpload(file_path, resumable=True)
+        media = MediaFileUpload(file_path)
 
         request = self.youtube.videos().insert(
             part="snippet,status", body=body, media_body=media
@@ -133,26 +133,49 @@ class YoutubeUploader:
         return response
 
 
+from datetime import datetime, timezone, timedelta
+
+
+def format_datetime_for_api(dt):
+    """
+    Format a datetime object for use with the YouTube API.
+    """
+    return dt.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+
+
+def get_current_time_utc():
+    """
+    Get the current time in UTC as a timezone-aware datetime object.
+    """
+    return datetime.now(timezone.utc)
+
+
 if __name__ == "__main__":
     uploader = YoutubeUploader(client_secrets_file="client_secret.json")
     uploader.authenticate()
 
-    # response = uploader.upload_video(
-    #     file_path="9_16_video.mp4",
-    #     title="My Awesome Video",
-    #     description="This is a great video I made",
-    #     category=YoutubeCategory.ENTERTAINMENT,
-    #     privacy_status=YoutubePrivacyStatus.PUBLIC,
-    #     tags=["awesome", "video"],
-    #     default_language="en",
-    #     embeddable=True,
-    #     license=YoutubeLicense.YOUTUBE,
-    #     public_stats_viewable=True,
-    #     made_for_kids=False,
-    # )
+    # Schedule the video to be published 10 days from now
+    publish_date = get_current_time_utc() + timedelta(minutes=5)
+    publish_date_str = format_datetime_for_api(dt=publish_date)
 
-    # video_id = response["id"]
-    # with open("video_ids.txt", "a") as f:
-    #     f.write(video_id)
+    response = uploader.upload_video(
+        file_path="9_16_video.mp4",
+        title="My Awesome Video 2",
+        description="This is a great video I made 2",
+        category=YoutubeCategory.ENTERTAINMENT,
+        privacy_status=YoutubePrivacyStatus.PRIVATE,
+        tags=["awesome", "video"],
+        default_language="en",
+        embeddable=True,
+        license=YoutubeLicense.YOUTUBE,
+        public_stats_viewable=True,
+        made_for_kids=False,
+        publish_at=publish_date_str,
+    )
+
+    video_id = response["id"]
+    print(f"Video ID: {video_id}")
+    with open("video_ids.txt", "+a") as f:
+        f.write(f"{video_id}\n")
 
     # uploader.set_thumbnail(video_id, "thumbnail.jpg")
