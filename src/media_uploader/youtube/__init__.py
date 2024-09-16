@@ -1,2 +1,2 @@
-from .youtube_uploader import *
+from .uploader import *
 from .enums import *
