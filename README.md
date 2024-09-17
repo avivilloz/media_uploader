@@ -67,3 +67,15 @@ response = uploader.upload_video(
     made_for_kids=False,
 )
 ```
+
+### DriveUploader
+
+```python
+from media_uploader.drive import DriveUploader
+
+src_path = "path/to/local/file"
+dst_path = "path/to/drive/folder"
+
+uploader = DriveUploader()
+uploader.upload(src_path=src_path, dst_path=dst_path)
+```

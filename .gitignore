@@ -1,9 +1,9 @@
 # project
-client_secret.json
-client_secrets.json
-video_ids.txt
+*secret.json
+*secrets.json
 *token.json
 *.mp4
+video_ids.txt
 
 # latest logs
 latest_logs/
