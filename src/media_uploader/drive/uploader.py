@@ -44,7 +44,7 @@ class DriveUploader:
                 flow = InstalledAppFlow.from_client_secrets_file(
                     self.client_secrets_file, self.scopes
                 )
-                creds = flow.run_local_server(port=0)
+                creds = flow.run_local_server(port=self.local_server_port)
             with open(self.token_file_path, "w") as token:
                 LOG.info(f"Saving credentials to {self.token_file_path}")
                 token.write(creds.to_json())
