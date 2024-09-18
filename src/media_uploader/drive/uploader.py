@@ -41,7 +41,7 @@ class DriveUploader:
                 creds.refresh(Request())
             else:
                 LOG.info("Fetching new credentials using OAuth flow")
-                flow = InstalledAppFlow.from_client_secretss_file(
+                flow = InstalledAppFlow.from_client_secrets_file(
                     self.client_secrets_file, self.scopes
                 )
                 creds = flow.run_local_server(port=0)
