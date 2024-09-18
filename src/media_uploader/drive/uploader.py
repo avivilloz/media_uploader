@@ -19,11 +19,11 @@ class DriveUploader:
         token_file_path="drive_token.json",
         local_server_port: int = 8081,
     ):
+        self.scopes = ["https://www.googleapis.com/auth/drive"]
         self.token_file_path = token_file_path
         self.client_secrets_file = client_secrets_file
         self.service = self.get_drive_service()
         self.local_server_port = local_server_port
-        self.scopes = ["https://www.googleapis.com/auth/drive"]
 
     def get_credentials(self):
         """
